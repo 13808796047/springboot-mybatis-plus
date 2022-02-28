@@ -21,28 +21,33 @@ public class AccountController {
     public List<Account> getAll() {
         return accountService.list();
     }
+
     @PostMapping
-    public R save(@RequestBody Account account){
-      return new R(accountService.save(account),null);
+    public R save(@RequestBody Account account) {
+        return new R(accountService.save(account), null);
     }
+
     @PutMapping
-    public Boolean update(@RequestBody Account account){
+    public Boolean update(@RequestBody Account account) {
         return accountService.updateById(account);
     }
+
     @DeleteMapping("{id}")
-    public Boolean delete(@PathVariable Integer id){
+    public Boolean delete(@PathVariable Integer id) {
         return accountService.removeById(id);
     }
+
     @GetMapping("{id}")
-    public Account getById(@PathVariable Integer id){
+    public Account getById(@PathVariable Integer id) {
         return accountService.getById(id);
     }
+
     @GetMapping("{currentPage}/{pageSize}")
-    public IPage<Account> getPage(@PathVariable int currentPage,@PathVariable int pageSize){
+    public IPage<Account> getPage(@PathVariable int currentPage, @PathVariable int pageSize) {
         String name = null;
         IPage<Account> page = new Page<Account>(currentPage, pageSize);
         LambdaQueryWrapper<Account> queryWrapper = new LambdaQueryWrapper<Account>();
         queryWrapper.like(name != null, Account::getName, name);
-        return accountService.page(page,queryWrapper);
+        return accountService.page(page, queryWrapper);
     }
 }
